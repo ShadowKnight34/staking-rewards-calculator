@@ -36,3 +36,4 @@ function calculateRewards(req, res, next) {
 module.exports = {
   calculateRewards,
 };
+

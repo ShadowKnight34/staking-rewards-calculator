@@ -22,7 +22,7 @@ const api = {
       const response = await axiosInstance.get(url, { params });
       return response.data;
     } catch (error) {
-      throw error.response.data;
+      throw (error.response && error.response.data) ? error.response.data : error;
     }
   },
   post: async (url, data = {}) => {
@@ -31,7 +31,7 @@ const api = {
       return response.data;
     } catch (error) {
       console.log(error);
-      throw error.response.data;
+      throw (error.response && error.response.data) ? error.response.data : error;
     }
   },
   formPost: async (url, data) => {
@@ -42,7 +42,7 @@ const api = {
       return response.data;
     } catch (error) {
       console.log(error);
-      throw error.response.data;
+      throw (error.response && error.response.data) ? error.response.data : error;
     }
   },
   authPost: async (url, data) => {
@@ -53,7 +53,7 @@ const api = {
       return response.data;
     } catch (error) {
       console.log(error);
-      throw error.response.data;
+      throw (error.response && error.response.data) ? error.response.data : error;
     }
   }
   // Add functions for other HTTP methods (PUT, DELETE) as needed

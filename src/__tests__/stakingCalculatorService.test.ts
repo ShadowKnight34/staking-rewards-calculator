@@ -319,3 +319,4 @@ describe('DeFi Staking Rewards Calculator Service', () => {
     expect(result.projectedUsdValue).toBe(2625);
   });
 });
+

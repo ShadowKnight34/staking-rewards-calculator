@@ -169,3 +169,4 @@ describe('POST /api/calculate-rewards API Endpoints & Controller', () => {
     consoleSpy.mockRestore();
   });
 });
+

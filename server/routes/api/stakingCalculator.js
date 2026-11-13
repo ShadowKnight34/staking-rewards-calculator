@@ -11,3 +11,4 @@ const { validateCalculateRewards } = require('../../validators/stakingCalculator
 router.post('/calculate-rewards', validateCalculateRewards, calculateRewards);
 
 module.exports = router;
+

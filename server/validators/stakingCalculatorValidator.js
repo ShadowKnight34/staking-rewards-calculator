@@ -78,3 +78,4 @@ function validateCalculateRewards(req, res, next) {
 module.exports = {
   validateCalculateRewards,
 };
+

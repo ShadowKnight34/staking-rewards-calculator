@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   Checkbox,
+  Tab,
+  Tabs,
   Table,
   TableBody,
   TableCell,
@@ -19,10 +21,14 @@ import { selectBlogSearch } from "../../store/blogs/selectors";
 import Text2 from "../../components/text/Text2";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import CalculateIcon from "@mui/icons-material/Calculate";
+import TableChartIcon from "@mui/icons-material/TableChart";
 import { useNavigate } from "react-router-dom";
+import StakingCalculator from "./StakingCalculator/StakingCalculator";
 
 const Dashboard = () => {
   const [isPublished, setIsPublished] = useState(false);
+  const [activeTab, setActiveTab] = useState<'calculator' | 'offers'>('calculator');
 
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectBlogSearch);
@@ -100,21 +106,43 @@ const Dashboard = () => {
         sx={{
           minHeight: "calc(100vh - 450px)",
           backgroundColor: "#fff",
-          padding: "80px 24px",
+          padding: { xs: "30px 16px", md: "50px 24px" },
           display: "flex",
-          gap: "20px",
+          flexDirection: { xs: "column", md: "row" },
+          gap: "24px",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "16px", minWidth: { md: "280px" } }}>
           <Button
             variant="contained"
+            onClick={() => setActiveTab('calculator')}
+            startIcon={<CalculateIcon sx={{ fontSize: '28px !important' }} />}
             sx={{
-              backgroundColor: "#00dbe3",
+              backgroundColor: activeTab === 'calculator' ? "#00dbe3" : "#173039",
               borderRadius: "6px",
-              width: "352px",
+              width: { xs: "100%", md: "280px" },
               height: "64px",
-              fontSize: "24px",
-              lineHeight: "60px",
+              fontSize: "18px",
+              textTransform: "uppercase",
+              color: "#ffffff",
+              fontWeight: 700,
+              boxShadow: activeTab === 'calculator' ? "0 4px 14px rgba(0, 219, 227, 0.4)" : "none",
+              '&:hover': {
+                backgroundColor: activeTab === 'calculator' ? "#00b4c9" : "#23a2bb",
+              },
+            }}
+          >
+            Staking Calculator
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => setActiveTab('offers')}
+            sx={{
+              backgroundColor: activeTab === 'offers' ? "#00dbe3" : "#23a2bb",
+              borderRadius: "6px",
+              width: { xs: "100%", md: "280px" },
+              height: "64px",
+              fontSize: "20px",
               textTransform: "uppercase",
               color: "#ffffff",
               fontWeight: 700,
@@ -124,13 +152,13 @@ const Dashboard = () => {
           </Button>
           <Button
             variant="contained"
+            onClick={() => setActiveTab('offers')}
             sx={{
               backgroundColor: "#23a2bb",
               borderRadius: "6px",
-              width: "352px",
+              width: { xs: "100%", md: "280px" },
               height: "64px",
-              fontSize: "24px",
-              lineHeight: "60px",
+              fontSize: "20px",
               textTransform: "uppercase",
               color: "#ffffff",
               fontWeight: 700,
@@ -140,13 +168,13 @@ const Dashboard = () => {
           </Button>
           <Button
             variant="contained"
+            onClick={() => setActiveTab('offers')}
             sx={{
               backgroundColor: "#173039",
               borderRadius: "6px",
-              width: "352px",
+              width: { xs: "100%", md: "280px" },
               height: "64px",
-              fontSize: "24px",
-              lineHeight: "60px",
+              fontSize: "20px",
               textTransform: "uppercase",
               color: "#ffffff",
               fontWeight: 700,
@@ -155,7 +183,41 @@ const Dashboard = () => {
             Exchange
           </Button>
         </Box>
-        <Box sx={{ overflow: "auto", width: { sm: "100%" } }}>
+
+        <Box sx={{ overflow: "auto", flexGrow: 1, width: "100%" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}>
+            <Tabs
+              value={activeTab}
+              onChange={(e, val) => setActiveTab(val)}
+              textColor="primary"
+              indicatorColor="primary"
+              sx={{
+                "& .MuiTab-root": {
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  textTransform: "none",
+                  minHeight: "48px",
+                },
+              }}
+            >
+              <Tab
+                icon={<CalculateIcon />}
+                iconPosition="start"
+                label="DeFi Staking Rewards Calculator"
+                value="calculator"
+              />
+              <Tab
+                icon={<TableChartIcon />}
+                iconPosition="start"
+                label="Marketplace Offers"
+                value="offers"
+              />
+            </Tabs>
+          </Box>
+
+          {activeTab === 'calculator' ? (
+            <StakingCalculator />
+          ) : (
           <Table
             aria-label="simple table"
             sx={{
@@ -356,6 +418,7 @@ const Dashboard = () => {
               </TableRow>
             </TableBody>
           </Table>
+          )}
         </Box>
       </Box>
     </Box>
