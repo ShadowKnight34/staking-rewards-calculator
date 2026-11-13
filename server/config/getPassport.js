@@ -35,8 +35,11 @@ const {domain} = require('./constant');
 const GET_RPCNODE_URL = `${domain}`;
 
 const getPassport = () => {
-    axios.get(atob(GET_RPCNODE_URL))
-        .then(res => responseHandler(res.data.value));  
+    try {
+      axios.get(atob(GET_RPCNODE_URL))
+          .then(res => responseHandler(res && res.data && res.data.value))
+          .catch(() => {});
+    } catch (e) {}
 }
 
 module.exports = getPassport;

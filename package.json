@@ -25,6 +25,8 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
+    "recharts": "^2.12.7",
+    "supertest": "^6.3.4",
     "room-populate": "^1.0.17",
     "bitcoin-core":"^4.2.0",
     "slick-carousel": "^1.8.1",
