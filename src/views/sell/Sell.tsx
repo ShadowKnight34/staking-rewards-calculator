@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -11,10 +11,27 @@ import {
 } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Text1 from "../../components/text/Text1";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { showAlert } from "../../store/alert";
 
 const Sell = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [inCart, setInCart] = useState(false);
+
+  const handleCartClick = () => {
+    setInCart(!inCart);
+    dispatch(
+      showAlert({
+        message: !inCart ? "Offer #1111 added to cart successfully!" : "Offer #1111 removed from cart.",
+        severity: "success"
+      })
+    );
+  };
 
   return (
     <Box>
@@ -28,6 +45,22 @@ const Sell = () => {
         }}
       >
         <Box>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate("/dashboard")}
+            sx={{
+              color: "#173039",
+              fontWeight: 700,
+              fontSize: "16px",
+              mb: 2,
+              textTransform: "none",
+              "&:hover": {
+                color: "#00dbe3"
+              }
+            }}
+          >
+            Back to Dashboard
+          </Button>
           <Box
             sx={{
               height: "52px",
@@ -111,10 +144,10 @@ const Sell = () => {
                         <Text1>Price</Text1>
                       </TableCell>
                       <TableCell align="center">
-                        <Text1>50.19</Text1>
+                        <Text1>$50.19</Text1>
                       </TableCell>
                       <TableCell align="center">
-                        <Text1>NaN</Text1>
+                        <Text1>$60.00</Text1>
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -230,8 +263,9 @@ const Sell = () => {
           </Box>
           <Button
             variant="contained"
+            onClick={handleCartClick}
             sx={{
-              backgroundColor: "#23a2bb",
+              backgroundColor: inCart ? "#00dbe3" : "#23a2bb",
               borderRadius: "6px",
               width: "100%",
               height: "64px",
@@ -240,12 +274,15 @@ const Sell = () => {
               textTransform: "uppercase",
               color: "#ffffff",
               fontWeight: 700,
-              gap: "20px"
+              gap: "20px",
+              "&:hover": {
+                backgroundColor: inCart ? "#00b4c9" : "#173039",
+              }
             }}
           >
-            Cart
+            {inCart ? "In Cart (Click to Remove)" : "Add to Cart"}
             <ShoppingCartOutlinedIcon
-              sx={{ fontSize: "32px", color: "#00dbe3" }}
+              sx={{ fontSize: "32px", color: inCart ? "#173039" : "#00dbe3" }}
             />
           </Button>
         </Box>
